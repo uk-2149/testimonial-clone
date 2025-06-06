@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import TestProjectModel from "../models/Test-project.model";
+import { v4 as uuidv4 } from 'uuid';
 
 interface ProjectRequestBody {
   projectName: string;
   projectDesc: string;
   link: string;
+  shareId: string;
 }
 
 interface AuthenticatedRequest extends Request<{}, {}, ProjectRequestBody> {
@@ -13,6 +15,7 @@ interface AuthenticatedRequest extends Request<{}, {}, ProjectRequestBody> {
 
 export async function handleProjectSubmission(req: AuthenticatedRequest, res: Response): Promise<any> {
     const { projectName, projectDesc, link } = req.body;
+    const shareId = uuidv4().slice(0, 8);
   
     try {
         const project = new TestProjectModel({
@@ -20,6 +23,7 @@ export async function handleProjectSubmission(req: AuthenticatedRequest, res: Re
             projectName,
             projectDesc,
             projectLink: link,
+            shareId
           });
         
           await project.save();

@@ -23,6 +23,6 @@ const auth = (req: Request, res: Response, next: NextFunction): void => {
 
 router.post("/", auth, handleProjectSubmission);
 
-router.post("/", auth, handleAllProjects);
+router.get("/", auth, handleAllProjects);
 
 export default router;

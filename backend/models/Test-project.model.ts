@@ -6,6 +6,7 @@ const ProjectSchema = new Schema({
   projectName: { type: String, required: true },
   projectDesc: { type: String, required: true },
   projectLink: { type: String, required: true },
+  shareId: { type: String, unique: true },
 });
 
 export default mongoose.model("Test-project", ProjectSchema);
