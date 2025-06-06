@@ -3,14 +3,14 @@ import axios from "axios";
 
 interface ProjectFormData {
   projectName: string;
-  desc: string;
+  projectDesc: string;
   link: string;
 }
 
 function ProjectForm() {
   const [formData, setFormData] = useState<ProjectFormData>({
     projectName: "",
-    desc: "",
+    projectDesc: "",
     link: "",
   })
 
@@ -21,12 +21,12 @@ function ProjectForm() {
       if(!token) {
         alert("Authentication Error");
       }
-      const res = await axios.post(`http:localhost:5000/api/projects`, formData, {
+      const res = await axios.post(`http://localhost:5000/api/projects`, formData, {
         headers: { "x-auth-token": token },
       });
       setFormData({
         projectName: "",
-        desc: "",
+        projectDesc: "",
         link: ""
       })
     } catch (err: any) {
@@ -46,14 +46,14 @@ function ProjectForm() {
 <label htmlFor="description">
     Project Description
 </label>
-<input type="text" name="description" id="description" placeholder='....' className='border-1 rounded-sm' onChange={(e) => setFormData({...formData, desc: e.target.value})}/>
+<input type="text" name="description" id="description" placeholder='....' className='border-1 rounded-sm' onChange={(e) => setFormData({...formData, projectDesc: e.target.value})}/>
 
 <label htmlFor="description">
     Project Link
 </label>
 <input type="link" name="link" id="link" placeholder='https://xyz.com' className='border-1 rounded-sm' onChange={(e) => setFormData({...formData, link: e.target.value})}/>
 
-<button type="submit" className='mt-2 border-2 bg-fuchsia-400 disabled:cursor-not-allowed' disabled={!formData.projectName || !formData.desc || !formData.link}>Create New Project</button>
+<button type="submit" className='mt-2 border-2 bg-fuchsia-400 disabled:cursor-not-allowed' disabled={!formData.projectName || !formData.projectDesc || !formData.link}>Create New Project</button>
 </form>
     </div>
   )
