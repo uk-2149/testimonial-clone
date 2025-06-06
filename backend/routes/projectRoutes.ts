@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { handleProjectSubmission } from "../controllers/handleProjects";
+import { handleAllProjects, handleProjectSubmission } from "../controllers/handleProjects";
 
 const router = express.Router();
 
@@ -22,5 +22,7 @@ const auth = (req: Request, res: Response, next: NextFunction): void => {
   
 
 router.post("/", auth, handleProjectSubmission);
+
+router.post("/", auth, handleAllProjects);
 
 export default router;

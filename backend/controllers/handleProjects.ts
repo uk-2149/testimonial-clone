@@ -29,3 +29,12 @@ export async function handleProjectSubmission(req: AuthenticatedRequest, res: Re
     }
 }
 
+
+export async function handleAllProjects(req: AuthenticatedRequest, res:Response) {
+  try {
+    const projects = await TestProjectModel.find({ userId: req.user });
+    res.json(projects);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+}
