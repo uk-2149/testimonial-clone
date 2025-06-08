@@ -42,3 +42,15 @@ export async function handleAllProjects(req: AuthenticatedRequest, res:Response)
     res.status(500).json({ error: err.message });
   }
 }
+
+export async function handleProjectDashboard(req: Request<{ id: string }>, res: Response): Promise<any> {
+  try {
+    const project = await TestProjectModel.findById(req.params.id);
+    if (!project || project.userId.toString() !== req.user) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+    return res.json(project);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+}

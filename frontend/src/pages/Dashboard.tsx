@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ProjectForm from '../components/ProjectForm';
+import ProjectDashboard from './ProjectDashboard';
 
 interface Project {
   _id: string;
@@ -18,6 +19,7 @@ interface DashboardProps {
 const Dashboard:  React.FC<DashboardProps> = ({ token, setToken }) => {
   const[projects, setProjects] = useState<Project[]>([]);
   const[showProjectForm, setShowProjectForm] = useState<boolean>(false);
+  const[showProjectDasboard, setShowProjectDashboard] = useState<boolean>(false);
 
   useEffect(() => {
   const fetchProjects = async () => {
@@ -49,7 +51,7 @@ const Dashboard:  React.FC<DashboardProps> = ({ token, setToken }) => {
     </h1>
 
     <button
-      onClick={() => setShowProjectForm(true)} // Make sure to toggle your modal or form
+      onClick={() => setShowProjectForm(true)}
       className="bg-fuchsia-600 hover:bg-fuchsia-700 transition-colors duration-300 px-6 py-2 text-white rounded-xl shadow-lg cursor-pointer"
     >
      Create Project
@@ -61,6 +63,7 @@ const Dashboard:  React.FC<DashboardProps> = ({ token, setToken }) => {
       <div
         key={proj._id}
         className="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl hover:shadow-blue-500/20 transition-shadow duration-300 p-6 flex flex-col justify-between"
+        onClick={() => <ProjectDashboard projectId={proj._id}/>}
       >
         <div>
           <h3 className="text-xl font-semibold text-blue-300 mb-2">
