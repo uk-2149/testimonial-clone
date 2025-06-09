@@ -9,6 +9,8 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import ProjectDashboard from "./pages/ProjectDashboard";
+import Review from "./pages/Review";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -21,7 +23,9 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard token={token} setToken={setToken}/>} />
+      <Route path="/dashboard/:id" element={<ProjectDashboard token={token} />} />
       <Route path="/" element={<Home />} />
+      <Route path="/review/:shareId" element={<Review />} />
       </Routes>
       </Router>
     </div>

@@ -23,10 +23,10 @@ function Login() {
             }
         );
         alert("You are successfully logged in!")
-        setTimeout(() => {
-            localStorage.setItem("token", String(res.data.token));
-            navigate("/dashboard")
-        }, 1000);
+        localStorage.setItem("token", String(res.data.token));
+        navigate("/dashboard")
+        // setTimeout(() => {
+        // }, 1000);
     } catch(err: any) {
         console.error(err.response.data);
         alert(`Error: ${err.response.data}`)

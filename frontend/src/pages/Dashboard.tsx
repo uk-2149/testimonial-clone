@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ProjectForm from '../components/ProjectForm';
 import ProjectDashboard from './ProjectDashboard';
+import { useNavigate } from 'react-router-dom';
 
 interface Project {
   _id: string;
@@ -21,20 +22,22 @@ const Dashboard:  React.FC<DashboardProps> = ({ token, setToken }) => {
   const[showProjectForm, setShowProjectForm] = useState<boolean>(false);
   const[showProjectDasboard, setShowProjectDashboard] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
+  if (!token) navigate("/login");
+
+
   useEffect(() => {
   const fetchProjects = async () => {
     try {
-      if (!token) {
-        alert("Authentication error");
-        return;
-      }
       const res = await axios.get(`http://localhost:5000/api/projects`, {
         headers: { "x-auth-token": token },
       });
-
       setProjects(res.data as Project[]);
     } catch (err: any) {
       console.error(err.response?.data || err.message);
+      // navigate("/login");
+      // localStorage.clear();
     }
   };
 
@@ -63,7 +66,7 @@ const Dashboard:  React.FC<DashboardProps> = ({ token, setToken }) => {
       <div
         key={proj._id}
         className="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl hover:shadow-blue-500/20 transition-shadow duration-300 p-6 flex flex-col justify-between"
-        onClick={() => <ProjectDashboard projectId={proj._id}/>}
+        onClick={() => navigate(`/dashboard/${proj._id}`)}
       >
         <div>
           <h3 className="text-xl font-semibold text-blue-300 mb-2">
