@@ -12,27 +12,28 @@ interface Project {
   projectLink: string;
 }
 
-interface DashboardProps {
-  token: string;
-  setToken: React.Dispatch<React.SetStateAction<string>>;
-}
+// interface DashboardProps {
+//   token: string;
+//   setToken: React.Dispatch<React.SetStateAction<string>>;
+// }
 
-const Dashboard:  React.FC<DashboardProps> = ({ token, setToken }) => {
+const Dashboard = () => {
   const[projects, setProjects] = useState<Project[]>([]);
   const[showProjectForm, setShowProjectForm] = useState<boolean>(false);
-  const[showProjectDasboard, setShowProjectDashboard] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
-  if (!token) navigate("/login");
-
+  // if (!token) navigate("/login");
 
   useEffect(() => {
   const fetchProjects = async () => {
+    const token = localStorage.getItem("token");
+    if(!token) return;
     try {
       const res = await axios.get(`http://localhost:5000/api/projects`, {
         headers: { "x-auth-token": token },
       });
+      // if (!token) navigate("/login");
       setProjects(res.data as Project[]);
     } catch (err: any) {
       console.error(err.response?.data || err.message);
@@ -41,8 +42,9 @@ const Dashboard:  React.FC<DashboardProps> = ({ token, setToken }) => {
     }
   };
 
-  fetchProjects(); 
-}, [token]);
+  fetchProjects();
+
+}, []);
 
 
   return (

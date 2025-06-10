@@ -15,7 +15,7 @@ function Login() {
     setLoading(true);
 
     try {
-        const res = await axios.post<{token: String}>(
+        const res = await axios.post<{token: string}>(
             "http://localhost:5000/api/auth/login",
             {
                 email,
@@ -23,10 +23,8 @@ function Login() {
             }
         );
         alert("You are successfully logged in!")
-        localStorage.setItem("token", String(res.data.token));
+        localStorage.setItem("token", res.data.token);
         navigate("/dashboard")
-        // setTimeout(() => {
-        // }, 1000);
     } catch(err: any) {
         console.error(err.response.data);
         alert(`Error: ${err.response.data}`)
@@ -36,9 +34,9 @@ function Login() {
   }
 
   return (
-    <div>
-        {loading && <Loading />}
-        {<div className="w-screen h-screen bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-black flex items-center justify-center relative overflow-hidden">
+    <>
+        {loading ? <Loading /> : (
+        <div className="w-screen h-screen bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-black flex items-center justify-center relative overflow-hidden">
 
 {/* Background Quote */}
 <div className="absolute text-[250px] font-bold text-[#1e3a8a] opacity-10 -top-10 -left-0 select-none">
@@ -95,9 +93,8 @@ function Login() {
   </button>
 </form>
 </div>
-}
-    </div>
-  )
+        )}
+</>  )
 }
 
 export default Login;

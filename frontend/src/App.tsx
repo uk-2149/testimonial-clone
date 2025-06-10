@@ -22,8 +22,8 @@ function App() {
         <Routes>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/dashboard" element={<Dashboard token={token} setToken={setToken}/>} />
-      <Route path="/dashboard/:id" element={<ProjectDashboard token={token} />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard/:id" element={<ProjectDashboard />} />
       <Route path="/" element={<Home />} />
       <Route path="/review/:shareId" element={<Review />} />
       </Routes>

@@ -6,18 +6,15 @@ const router = express.Router();
 
 const auth = (req: Request, res: Response, next: NextFunction): void => {
     const token = req.header("x-auth-token");
-    // if (!token) {
-    //   res.status(401).json({ msg: "No token, authorization denied" });
-    //   return;
-    // }
   
+    if (!token) {
+      res.status(401).json({ msg: "No token, authorization denied" });
+      console.log(token);
+      return;
+    }
     try {
-      if(token) {
       const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string };
       (req as any).user = decoded.id;
-      } else {
-      res.status(401).json({ msg: "No token, authorization denied" });
-      }
       next();
     } catch (err) {
       res.status(401).json({ msg: "Token is not valid" });

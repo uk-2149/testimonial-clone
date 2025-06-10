@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 interface Project {
     _id: string | undefined;
@@ -11,11 +12,7 @@ interface Project {
     shareId: string;
   }
 
-  interface ProjectDashboardProps {
-    token: string;
-  }
-
-  const ProjectDashboard: React.FC<ProjectDashboardProps> = ({ token }) => {
+  const ProjectDashboard = () => {
   const { id } = useParams();
   const [project, setProject] = useState<Project>({
     _id: id,
@@ -25,13 +22,15 @@ interface Project {
     projectLink: "",
     shareId: "",
   });
+  const [loading, setLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
 
-  if(!token) navigate("/login");
+  // if(!token) navigate("/login");
   
   useEffect(() => {
     const fetchProject = async () => {
+      const token = localStorage.getItem("token");
       try {
         const res = await axios.get(`http://localhost:5000/api/projects/${id}`, {
           headers: { "x-auth-token": token },
@@ -39,20 +38,24 @@ interface Project {
         setProject(res.data);
       } catch (err) {
         console.error("Failed to fetch project:", err);
-        navigate("/login");
-        localStorage.clear();
+        // navigate("/login");
+        // localStorage.clear();
+      } finally {
+        setLoading(false);
       }
     };
   
-    if (id) fetchProject();
+    fetchProject();
   }, [id]);
   
 
   return (
     <div>
+      {loading ? <Loading /> : <div>
         <h1>{project.projectName}</h1>
         <p>Share this link to collect reviews</p>
         <p>http://localhost:5173/review/{project.shareId}</p>
+        </div>}
     </div>
   )
 }

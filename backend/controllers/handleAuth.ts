@@ -54,7 +54,7 @@ async function handleLogin(req: Request<{}, {}, LoginRequestBody>, res: Response
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "cutittestimonialjwt", {
       expiresIn: "1h",
     });
-    res.json({ token });
+    return res.json({ token });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
