@@ -4,15 +4,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 
 interface Project {
-    _id: string | undefined;
-    userId: string;
-    projectName: string;
-    projectDesc: string;
-    projectLink: string;
-    shareId: string;
-  }
+  _id: string | undefined;
+  userId: string;
+  projectName: string;
+  projectDesc: string;
+  projectLink: string;
+  shareId: string;
+}
 
-  const ProjectDashboard = () => {
+const ProjectDashboard = () => {
   const { id } = useParams();
   const [project, setProject] = useState<Project>({
     _id: id,
@@ -23,11 +23,10 @@ interface Project {
     shareId: "",
   });
   const [loading, setLoading] = useState<boolean>(true);
+  const [copied, setCopied] = useState(false);
 
   const navigate = useNavigate();
 
-  // if(!token) navigate("/login");
-  
   useEffect(() => {
     const fetchProject = async () => {
       const token = localStorage.getItem("token");
@@ -39,25 +38,46 @@ interface Project {
       } catch (err) {
         console.error("Failed to fetch project:", err);
         // navigate("/login");
-        // localStorage.clear();
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchProject();
   }, [id]);
-  
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`http://localhost:5173/review/${project.shareId}`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <div>
-      {loading ? <Loading /> : <div>
-        <h1>{project.projectName}</h1>
-        <p>Share this link to collect reviews</p>
-        <p>http://localhost:5173/review/{project.shareId}</p>
-        </div>}
-    </div>
-  )
-}
+    <div className="w-screen h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex items-center justify-center px-4">
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl p-6 flex flex-col justify-between w-full max-w-2xl">
+          <h1 className="text-2xl font-bold text-blue-400 mb-2">{project.projectName}</h1>
+          <p className="text-gray-400 mb-4">{project.projectDesc}</p>
 
-export default ProjectDashboard
+          <p className="text-gray-400 mb-4">Share this link to collect reviews:</p>
+
+          <div className="bg-gray-100 p-4 rounded-md flex items-center justify-between">
+            <span className="text-sm break-all text-gray-800">
+              http://localhost:5173/review/{project.shareId}
+            </span>
+            <button
+              onClick={handleCopy}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md ml-2 text-sm transition"
+            >
+              {copied ? "Copied!" : "Copy"}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ProjectDashboard;

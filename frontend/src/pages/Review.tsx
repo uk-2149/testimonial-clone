@@ -42,9 +42,16 @@ function Review() {
       }, [shareId]);
 
   
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async(e: React.FormEvent) => {
         e.preventDefault();
         console.log("Review submitted:", review);
+        try {
+          await axios.post(`http://localhost:5000/api/review/${shareId}`, review);
+          alert("Review Submitted");
+        } catch(err: any) {
+          console.error(err.response?.data || err.message);
+          alert(`error: ${err.message}`)
+        }
         // TODO: POST to backend
       };
     

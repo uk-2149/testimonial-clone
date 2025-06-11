@@ -1,14 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ProjectForm from '../components/ProjectForm';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-interface Project {
+interface Review {
   _id: string;
-  userId: string;
-  projectName: string;
-  projectDesc: string;
-  projectLink: string;
+  projectId: string;
+  name: string;
+  message: string;
+  rating: number;
 }
 
 // interface DashboardProps {
@@ -16,9 +16,11 @@ interface Project {
 //   setToken: React.Dispatch<React.SetStateAction<string>>;
 // }
 
-const Dashboard = () => {
-  const[projects, setProjects] = useState<Project[]>([]);
-  const[showProjectForm, setShowProjectForm] = useState<boolean>(false);
+const ReviewDashboard = () => {
+
+  const { id } = useParams();
+
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   const navigate = useNavigate();
 
@@ -29,11 +31,11 @@ const Dashboard = () => {
     const token = localStorage.getItem("token");
     if(!token) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/projects`, {
+      const res = await axios.get(`http://localhost:5000/api/review/${}`, {
         headers: { "x-auth-token": token },
       });
       // if (!token) navigate("/login");
-      setProjects(res.data as Project[]);
+      setReviews(res.data as Review[]);
     } catch (err: any) {
       console.error(err.response?.data || err.message);
       // navigate("/login");
@@ -54,20 +56,20 @@ const Dashboard = () => {
       Your Projects
     </h1>
 
-    <button
+    {/* <button
       onClick={() => setShowProjectForm(true)}
       className="bg-fuchsia-600 hover:bg-fuchsia-700 transition-colors duration-300 px-6 py-2 text-white rounded-xl shadow-lg cursor-pointer"
     >
      Create Project
     </button>
-  </div>
+  </div> */}
 
   <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-    {projects.map((proj) => (
+    {reviews.map((rev) => (
       <div
-        key={proj._id}
+        key={rev._id}
         className="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl hover:shadow-blue-500/20 transition-shadow duration-300 p-6 flex flex-col justify-between"
-        onClick={() => navigate(`/dashboard/${proj._id}`)}
+        // onClick={() => navigate(`/dashboard/${proj._id}`)}
       >
         <div>
           <h3 className="text-xl font-semibold text-blue-300 mb-2">
@@ -87,10 +89,10 @@ const Dashboard = () => {
       </div>
     ))}
   </div>
-  {showProjectForm && (<ProjectForm setShowProjectForm={setShowProjectForm}/>)}
+</div>
 </div>
 
   )
 }
 
-export default Dashboard
+export default ReviewDashboard;
