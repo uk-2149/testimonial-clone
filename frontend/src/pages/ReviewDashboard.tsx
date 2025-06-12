@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import ProjectForm from '../components/ProjectForm';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import EmbedLink from '../components/EmbedLink';
 
