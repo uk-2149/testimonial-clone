@@ -22,6 +22,8 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   // if (!token) navigate("/login");
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
       try {
-        const res = await axios.get(`http://localhost:5000/api/projects`, {
+        const res = await axios.get(`${backendUrl}/api/projects`, {
           headers: { "x-auth-token": token },
         });
         // if (!token) navigate("/login");

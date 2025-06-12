@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 
 function Login() {
@@ -10,13 +10,15 @@ function Login() {
 
   const navigate = useNavigate();
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const res = await axios.post<{ token: string }>(
-        "http://localhost:5000/api/auth/login",
+        `${backendUrl}/api/auth/login`,
         {
           email,
           password,

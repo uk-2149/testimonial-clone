@@ -25,6 +25,8 @@ const ReviewDashboard = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [showEmbed, setShowEmbed] = useState<boolean>(false);
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   // const navigate = useNavigate();
 
   // if (!token) navigate("/login");
@@ -34,7 +36,7 @@ const ReviewDashboard = () => {
     const token = localStorage.getItem("token");
     if(!token) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/review/${id}`, {
+      const res = await axios.get(`${backendUrl}/api/review/${id}`, {
         headers: { "x-auth-token": token },
       });
       // if (!token) navigate("/login");

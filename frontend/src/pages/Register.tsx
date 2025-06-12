@@ -10,12 +10,14 @@ function Register() {
 
   const navigate = useNavigate();
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const handleRegister = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
         const res = await axios.post<{token: String}>(
-            "http://localhost:5000/api/auth/register",
+            `${backendUrl}/api/auth/register`,
             {
                 name,
                 email,

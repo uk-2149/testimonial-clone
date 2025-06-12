@@ -27,12 +27,14 @@ const ProjectDashboard = () => {
 
   const navigate = useNavigate();
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   useEffect(() => {
     const fetchProject = async () => {
       const token = localStorage.getItem("token");
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/projects/${id}`,
+          `${backendUrl}/api/projects/${id}`,
           {
             headers: { "x-auth-token": token },
           }

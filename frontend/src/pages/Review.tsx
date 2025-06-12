@@ -28,11 +28,13 @@ function Review() {
     shareId: "",
   });
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   useEffect(() => {
     const fetchProject = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/projects/review/${shareId}`
+          `${backendUrl}/api/projects/review/${shareId}`
         );
         setProject(res.data);
       } catch (err) {
