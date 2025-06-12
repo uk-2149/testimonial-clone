@@ -10,7 +10,11 @@ import handleReviews from "./routes/ReviewRoutes";
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "*", credentials: true }));
+app.use(cors({
+    origin: "https://testimonial-uk-97.vercel.app", 
+    credentials: true
+  }));
+  
 
 connectDB();
 
