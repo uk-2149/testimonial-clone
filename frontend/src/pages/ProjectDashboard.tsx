@@ -31,9 +31,12 @@ const ProjectDashboard = () => {
     const fetchProject = async () => {
       const token = localStorage.getItem("token");
       try {
-        const res = await axios.get(`http://localhost:5000/api/projects/${id}`, {
-          headers: { "x-auth-token": token },
-        });
+        const res = await axios.get(
+          `http://localhost:5000/api/projects/${id}`,
+          {
+            headers: { "x-auth-token": token },
+          }
+        );
         setProject(res.data);
       } catch (err) {
         console.error("Failed to fetch project:", err);
@@ -47,21 +50,27 @@ const ProjectDashboard = () => {
   }, [id]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`http://localhost:5173/review/${project.shareId}`);
+    navigator.clipboard.writeText(
+      `http://localhost:5173/review/${project.shareId}`
+    );
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex items-center justify-center px-4">
+    <div className="w-screen h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex flex-col gap-6 items-center justify-center px-4">
       {loading ? (
         <Loading />
       ) : (
         <div className="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl p-6 flex flex-col justify-between w-full max-w-2xl">
-          <h1 className="text-2xl font-bold text-blue-400 mb-2">{project.projectName}</h1>
+          <h1 className="text-2xl font-bold text-blue-400 mb-2">
+            {project.projectName}
+          </h1>
           <p className="text-gray-400 mb-4">{project.projectDesc}</p>
 
-          <p className="text-gray-400 mb-4">Share this link to collect reviews:</p>
+          <p className="text-gray-400 mb-4">
+            Share this link to collect reviews:
+          </p>
 
           <div className="bg-gray-100 p-4 rounded-md flex items-center justify-between">
             <span className="text-sm break-all text-gray-800">
@@ -76,6 +85,12 @@ const ProjectDashboard = () => {
           </div>
         </div>
       )}
+      <button
+        onClick={() => navigate(`/dashboard/review/${id}`)}
+        className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md ml-2 text-sm transition"
+      >
+        See reviews {`>>`}
+      </button>
     </div>
   );
 };

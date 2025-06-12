@@ -14,7 +14,10 @@ interface LoginRequestBody {
   password: string;
 }
 
-async function handleRegister(req: Request<{}, {}, RegisterRequestBody>, res: Response): Promise<any> {
+async function handleRegister(
+  req: Request<{}, {}, RegisterRequestBody>,
+  res: Response
+): Promise<any> {
   const { name, email, password } = req.body;
 
   try {
@@ -41,8 +44,10 @@ async function handleRegister(req: Request<{}, {}, RegisterRequestBody>, res: Re
   }
 }
 
-
-async function handleLogin(req: Request<{}, {}, LoginRequestBody>, res: Response): Promise<any> {
+async function handleLogin(
+  req: Request<{}, {}, LoginRequestBody>,
+  res: Response
+): Promise<any> {
   const { email, password } = req.body;
   try {
     const user = await TestUserModel.findOne({ email });
@@ -51,9 +56,13 @@ async function handleLogin(req: Request<{}, {}, LoginRequestBody>, res: Response
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Inavlid credentials" });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "cutittestimonialjwt", {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET || "cutittestimonialjwt",
+      {
+        expiresIn: "1h",
+      }
+    );
     return res.json({ token });
   } catch (err: any) {
     res.status(500).json({ error: err.message });

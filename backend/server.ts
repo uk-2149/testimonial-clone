@@ -10,13 +10,15 @@ import handleReviews from "./routes/ReviewRoutes";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "*", credentials: true }));
 
 connectDB();
 
 app.use("/api/auth", handleAuth)
 app.use("/api/projects", handleProjects)
 app.use("/api/review", handleReviews)
+
+app.use('/embed', express.static(path.join(__dirname, 'embed')));
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running at port ${PORT}`));

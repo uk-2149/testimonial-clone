@@ -109,6 +109,17 @@ function Register() {
   >
     Register
   </button>
+  <div className="text-center mt-4">
+  <span className="text-gray-400 text-sm">
+    Already registered{" "}
+    <a
+      href="/login"
+      className="text-blue-400 hover:text-blue-500 underline transition-all"
+    >
+      Login
+    </a>
+  </span>
+</div>
 </form>
 </div>
 

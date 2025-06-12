@@ -1,9 +1,9 @@
-import React from 'react'
-import ProjectForm from '../components/ProjectForm'
+import Login from './Login'
 
 function Home() {
   return (
     <div>
+      <Login />
     </div>
   )
 }
