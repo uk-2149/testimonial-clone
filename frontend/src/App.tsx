@@ -1,9 +1,7 @@
-import { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
 } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
