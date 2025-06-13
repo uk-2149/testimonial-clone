@@ -10,34 +10,31 @@ import handleReviews from "./routes/ReviewRoutes";
 
 const app = express();
 
-const reviewLimiter = rateLimit({
+const rateLimiter = rateLimit({
     windowMs: 60 * 1000,
     max: 60
   });
+
+const corsOptionsFrontendOnly = {
+  origin: "https://testimonial-uk-97.vercel.app",
+  credentials: true,
+ };
+
+ const corsOptionsAllOrigins = {
+   origin: '*',
+ };
 
 app.use(express.json());
   
 connectDB();
 
-app.use("/api/auth",cors({
-    origin: "https://testimonial-uk-97.vercel.app", 
-    credentials: true
-  }), handleAuth);
+app.use("/api/auth",cors(corsOptionsFrontendOnly), handleAuth);
 
-app.use("/api/projects",cors({
-    origin: "https://testimonial-uk-97.vercel.app", 
-    credentials: true
-  }), handleProjects);
+app.use("/api/projects",cors(corsOptionsFrontendOnly), handleProjects);
 
-app.use("/api/review",cors({
-    origin: '*',
-    credentials: true
-  }), reviewLimiter, handleReviews);
+app.use("/api/review",cors(corsOptionsAllOrigins), rateLimiter, handleReviews);
 
-app.use('/embed', cors({
-    origin: '*',
-    methods: ['GET']
-  }), reviewLimiter, express.static(path.join(__dirname, 'embed')));
+app.use('/embed', cors(corsOptionsAllOrigins), rateLimiter, express.static(path.join(__dirname, 'embed')));
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
