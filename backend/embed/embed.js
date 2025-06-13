@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 (async function () {
   const script = document.currentScript;
   const projectId = script?.getAttribute("data-project-id");

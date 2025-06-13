@@ -21,7 +21,6 @@ app.use(cors({
     credentials: true
   }));
   
-
 connectDB();
 
 app.use("/api/auth", handleAuth)
