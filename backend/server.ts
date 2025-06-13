@@ -15,7 +15,7 @@ const reviewLimiter = rateLimit({
     max: 60
   });
 
-const backend_url = process.env.BACKEND_URL;
+const backend_url = "https://testimonial-backend-qkla.onrender.com";
 
 app.use(express.json());
   
