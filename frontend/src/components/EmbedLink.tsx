@@ -9,11 +9,13 @@ interface EmbedLinkProps {
 const EmbedLink: React.FC<EmbedLinkProps> = ({ id, setShowEmbedLink }) => {
   const [copied, setCopied] = useState(false);
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const handleCopy = () => {
     navigator.clipboard.writeText(`
         <div id="review-widget"></div>
         <script 
-  src="http://localhost:5000/embed/embed.js" 
+  src="${backendUrl}/embed/embed.js"
   data-project-id="${id}">
 </script>`);
     setCopied(true);
@@ -38,7 +40,7 @@ const EmbedLink: React.FC<EmbedLinkProps> = ({ id, setShowEmbedLink }) => {
             <span className="text-sm break-all text-gray-800">
               {`<div id="review-widget"></div>`} <br />
               {`<script 
-  src="http://localhost:5000/embed/embed.js" 
+  src="${backendUrl}/embed/embed.js"
   data-project-id="${id}">
 </script>`}
             </span>
