@@ -15,8 +15,6 @@ const reviewLimiter = rateLimit({
     max: 60
   });
 
-const backend_url = "https://testimonial-backend-qkla.onrender.com";
-
 app.use(express.json());
   
 connectDB();
@@ -32,12 +30,13 @@ app.use("/api/projects",cors({
   }), handleProjects);
 
 app.use("/api/review",cors({
-    origin: ["https://testimonial-uk-97.vercel.app", backend_url],
+    origin: '*',
     credentials: true
-  }), handleReviews);
+  }), reviewLimiter, handleReviews);
 
 app.use('/embed', cors({
-    origin: '*'
+    origin: '*',
+    methods: ['GET']
   }), reviewLimiter, express.static(path.join(__dirname, 'embed')));
 
 const PORT = 5000;
