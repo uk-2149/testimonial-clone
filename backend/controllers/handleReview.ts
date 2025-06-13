@@ -47,7 +47,11 @@ export async function handleAllReviews(
 ): Promise<any> {
   try {
     const reviews = await TestimonialModel.find({ projectId: req.params.id });
-    return res.json(reviews);
+    return res.json(reviews.map(r => ({
+      name: r.name,
+      message: r.message,
+      rating: r.rating
+    })));
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }

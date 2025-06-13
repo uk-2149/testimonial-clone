@@ -1,10 +1,10 @@
-require("dotenv").config();
 
 (async function () {
   const script = document.currentScript;
   const projectId = script?.getAttribute("data-project-id");
   const container = document.getElementById("review-widget");
-  const backend_url = process.env.BACKEND_URL;
+  const src = script?.getAttribute("src");
+  const backend_url = src?.replace("/embed/embed.js", "");
 
   console.log("Script loaded with projectId:", projectId);
   console.log("Container found:", !!container);
