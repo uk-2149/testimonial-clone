@@ -16,18 +16,27 @@ const reviewLimiter = rateLimit({
   });
 
 app.use(express.json());
-app.use(cors({
-    origin: "https://testimonial-uk-97.vercel.app", 
-    credentials: true
-  }));
   
 connectDB();
 
-app.use("/api/auth", handleAuth)
-app.use("/api/projects", handleProjects)
-app.use("/api/review", handleReviews)
+app.use("/api/auth",cors({
+    origin: "https://testimonial-uk-97.vercel.app", 
+    credentials: true
+  }), handleAuth);
 
-app.use('/embed', cors({origin: '*'}), reviewLimiter, express.static(path.join(__dirname, 'embed')));
+app.use("/api/projects",cors({
+    origin: "https://testimonial-uk-97.vercel.app", 
+    credentials: true
+  }), handleProjects);
+
+app.use("/api/review",cors({
+    origin: "https://testimonial-uk-97.vercel.app", 
+    credentials: true
+  }), handleReviews);
+
+app.use('/embed', cors({
+    origin: '*'
+  }), reviewLimiter, express.static(path.join(__dirname, 'embed')));
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
