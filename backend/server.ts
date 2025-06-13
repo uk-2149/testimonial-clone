@@ -15,6 +15,8 @@ const reviewLimiter = rateLimit({
     max: 60
   });
 
+const backend_url = process.env.BACKEND_URL;
+
 app.use(express.json());
   
 connectDB();
@@ -30,7 +32,7 @@ app.use("/api/projects",cors({
   }), handleProjects);
 
 app.use("/api/review",cors({
-    origin: "https://testimonial-uk-97.vercel.app", 
+    origin: ["https://testimonial-uk-97.vercel.app", backend_url],
     credentials: true
   }), handleReviews);
 
