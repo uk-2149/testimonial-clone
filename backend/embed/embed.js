@@ -2,6 +2,7 @@
   const script = document.currentScript;
   const projectId = script?.getAttribute("data-project-id");
   const container = document.getElementById("review-widget");
+  const backend_url = process.env.BACKEND_URL;
 
   console.log("Script loaded with projectId:", projectId);
   console.log("Container found:", !!container);
@@ -10,7 +11,7 @@
 
   try {
     const res = await fetch(
-      `http://localhost:5000/api/review/use/${projectId}`
+      `${backend_url}/api/review/use/${projectId}`
     );
     const reviews = await res.json();
 
