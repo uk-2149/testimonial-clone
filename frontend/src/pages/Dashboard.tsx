@@ -22,13 +22,14 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token");
+
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  // if (!token) navigate("/login");
+  useEffect(() => {if (!token) navigate("/login")}, [])
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const token = localStorage.getItem("token");
       if (!token) return;
       try {
         const res = await axios.get(`${backendUrl}/api/projects`, {
@@ -38,8 +39,8 @@ const Dashboard = () => {
         setProjects(res.data as Project[]);
       } catch (err: any) {
         console.error(err.response?.data || err.message);
-        // navigate("/login");
-        // localStorage.clear();
+        alert(`Error" ${err.message}`)
+        localStorage.clear();
       }
     };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
@@ -9,6 +9,10 @@ function Login() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {if (token) navigate("/dashboard")}, [])
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 

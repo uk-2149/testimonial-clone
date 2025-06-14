@@ -1,21 +1,14 @@
 import { Request, Response } from "express";
-import TestimonialModel from "../models/Testimonial.model";
+import TestimonialModel, { ITestimonial } from "../models/Testimonial.model";
 import TestProjectModel from "../models/Test-project.model";
 
-interface ReviewRequest {
-  id: string;
-  name: string;
-  message: string;
-  rating: number;
-}
-
 interface AuthenticatedRequest
-  extends Request<{ id: string }, {}, ReviewRequest> {
+  extends Request<{ id: string }, {}, ITestimonial> {
   project?: string;
 }
 
 export async function handleReviewSubmit(
-  req: Request<{ shareId: string }, {}, ReviewRequest>,
+  req: Request<{ shareId: string }, {}, ITestimonial>,
   res: Response
 ): Promise<any> {
   const { name, message, rating } = req.body;
@@ -50,7 +43,8 @@ export async function handleAllReviews(
     return res.json(reviews.map(r => ({
       name: r.name,
       message: r.message,
-      rating: r.rating
+      rating: r.rating,
+      createdAt: r.createdAt ?? null,
     })));
   } catch (err: any) {
     res.status(500).json({ error: err.message });

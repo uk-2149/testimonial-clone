@@ -10,9 +10,10 @@ import Dashboard from "./pages/Dashboard";
 import ProjectDashboard from "./pages/ProjectDashboard";
 import Review from "./pages/Review";
 import ReviewDashboard from "./pages/ReviewDashboard";
+import { useState } from "react";
 
 function App() {
-  // const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState(localStorage.getItem("token"));
   // console.log("Current token:", token);
 
   return (

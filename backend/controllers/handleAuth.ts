@@ -35,7 +35,7 @@ async function handleRegister(
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET || "cutittestimonialjwt",
-      { expiresIn: "1h" }
+      { expiresIn: "3h" }
     );
 
     return res.json({ token });
@@ -60,7 +60,7 @@ async function handleLogin(
       { id: user._id },
       process.env.JWT_SECRET || "cutittestimonialjwt",
       {
-        expiresIn: "1h",
+        expiresIn: "3h",
       }
     );
     return res.json({ token });

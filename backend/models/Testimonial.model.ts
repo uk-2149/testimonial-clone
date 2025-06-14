@@ -1,13 +1,22 @@
-import mongoose from "mongoose";
-const Schema = mongoose.Schema;
+import mongoose, { Document, Schema, Types } from "mongoose";
 
-const TestimoialSchema = new Schema({
-  projectId: { type: Schema.Types.ObjectId, ref: "test-project", required: true },
-  name: { type: String, required: true },
-  message: { type: String, required: true },
-  rating: { type: Number, required: true },
-});
+export interface ITestimonial extends Document {
+  projectId: Types.ObjectId;
+  name: string;
+  message: string;
+  rating: number;
+  createdAt: Date;
+}
 
-TestimoialSchema.set("timestamps", true);
+const TestimonialSchema = new Schema<ITestimonial>(
+  {
+    projectId: { type: Schema.Types.ObjectId, ref: "test-project", required: true },
+    name: { type: String, required: true },
+    message: { type: String, required: true },
+    rating: { type: Number, required: true },
+  },
+  { timestamps: true }
+);
 
-export default mongoose.model("Testimonials", TestimoialSchema);
+
+export default mongoose.model<ITestimonial>("Testimonials", TestimonialSchema);

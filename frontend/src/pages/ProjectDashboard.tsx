@@ -27,11 +27,14 @@ const ProjectDashboard = () => {
 
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {if (!token) navigate("/login")}, [])
+
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchProject = async () => {
-      const token = localStorage.getItem("token");
       try {
         const res = await axios.get(
           `${backendUrl}/api/projects/${id}`,
@@ -40,9 +43,10 @@ const ProjectDashboard = () => {
           }
         );
         setProject(res.data);
-      } catch (err) {
+      } catch (err: any) {
         console.error("Failed to fetch project:", err);
-        // navigate("/login");
+        alert(`Error" ${err.message}`)
+        localStorage.clear();
       } finally {
         setLoading(false);
       }

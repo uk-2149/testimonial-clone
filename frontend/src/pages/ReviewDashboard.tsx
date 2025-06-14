@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import EmbedLink from '../components/EmbedLink';
 
@@ -23,16 +23,19 @@ const ReviewDashboard = () => {
 
   const [reviews, setReviews] = useState<Review[]>([]);
   const [showEmbed, setShowEmbed] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // if (!token) navigate("/login");
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {if (!token) navigate("/dashboard")}, [])
 
   useEffect(() => {
   const fetchProjects = async () => {
-    const token = localStorage.getItem("token");
+    setLoading(true);
     if(!token) return;
     try {
       const res = await axios.get(`${backendUrl}/api/review/${id}`, {
@@ -42,8 +45,10 @@ const ReviewDashboard = () => {
       setReviews(res.data as Review[]);
     } catch (err: any) {
       console.error(err.response?.data || err.message);
-      // navigate("/login");
-      // localStorage.clear();
+      alert(`Error" ${err.message}`)
+      localStorage.clear();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,7 +74,7 @@ const ReviewDashboard = () => {
     </button>
   </div>
 
-  {reviews.length === 0 && <p className='text-gray-300 text-center text-lg'>No reviews yet</p>}
+  {reviews.length === 0 && <p className='text-gray-300 text-center text-lg'>{loading ? "Loading reviews" : "No reviews yet"}</p>}
   <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto mt-10" >
     {reviews.map((rev) => (
       <div
