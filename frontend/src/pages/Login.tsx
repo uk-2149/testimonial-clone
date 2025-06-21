@@ -104,9 +104,11 @@ function Login() {
             <div className="text-center mt-4">
               <span className="text-gray-400 text-sm">
                 New here?{" "}
+
                 <a
-                  href="/register"
+                  href=""
                   className="text-blue-400 hover:text-blue-500 underline transition-all"
+                  onClick={() => navigate("/register")}
                 >
                   Register now
                 </a>
