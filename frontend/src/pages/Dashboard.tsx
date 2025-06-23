@@ -16,7 +16,18 @@ interface Project {
 //   setToken: React.Dispatch<React.SetStateAction<string>>;
 // }
 
+const ProjectSkeleton = () => (
+  <div className="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl p-6 animate-pulse space-y-4">
+    <div className="h-5 bg-slate-700 rounded w-3/4"></div>
+    <div className="h-4 bg-slate-700 rounded w-full"></div>
+    <div className="h-4 bg-slate-700 rounded w-5/6"></div>
+    <div className="mt-6 h-10 bg-slate-700 rounded w-full"></div>
+  </div>
+);
+
+
 const Dashboard = () => {
+  const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<Project[]>([]);
   const [showProjectForm, setShowProjectForm] = useState<boolean>(false);
 
@@ -41,6 +52,8 @@ const Dashboard = () => {
         console.error(err.response?.data || err.message);
         alert(`Error" ${err.message}`)
         localStorage.clear();
+      } finally {
+        setLoading(false)
       }
     };
 
@@ -63,30 +76,31 @@ const Dashboard = () => {
       </div>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-        {projects.map((proj) => (
-          <div
-            key={proj._id}
-            className="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl hover:shadow-blue-500/20 transition-shadow duration-300 p-6 flex flex-col justify-between"
-            onClick={() => navigate(`/dashboard/${proj._id}`)}
-          >
-            <div>
-              <h3 className="text-xl font-semibold text-blue-300 mb-2">
-                {proj.projectName}
-              </h3>
-              <p className="text-sm text-gray-300 mb-4">{proj.projectDesc}</p>
-            </div>
-
-            <a
-              // href={proj.projectLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-auto text-center bg-blue-600 hover:bg-blue-700 transition-colors duration-300 text-white px-4 py-2 rounded-md"
-            >
-              🔗 Visit Project
-            </a>
+  {loading
+    ? Array.from({ length: 6 }).map((_, i) => <ProjectSkeleton key={i} />)
+    : projects.map((proj) => (
+        <div
+          key={proj._id}
+          className="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl hover:shadow-blue-500/20 transition-shadow duration-300 p-6 flex flex-col justify-between"
+          onClick={() => navigate(`/dashboard/${proj._id}`)}
+        >
+          <div>
+            <h3 className="text-xl font-semibold text-blue-300 mb-2">
+              {proj.projectName}
+            </h3>
+            <p className="text-sm text-gray-300 mb-4">{proj.projectDesc}</p>
           </div>
-        ))}
-      </div>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-auto text-center bg-blue-600 hover:bg-blue-700 transition-colors duration-300 text-white px-4 py-2 rounded-md"
+          >
+            🔗 Visit Project
+          </a>
+        </div>
+      ))}
+</div>
+
       {showProjectForm && (
         <ProjectForm
           setShowProjectForm={setShowProjectForm}

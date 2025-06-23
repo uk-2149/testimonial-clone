@@ -17,7 +17,7 @@ function App() {
   // console.log("Current token:", token);
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="">
       <Router>
         <Routes>
           <Route path="/register" element={<Register />} />

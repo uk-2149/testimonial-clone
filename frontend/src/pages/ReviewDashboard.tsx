@@ -59,13 +59,12 @@ const ReviewDashboard = () => {
 
   return (
     
-<div className="w-screen h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] py-12 px-6 text-white">
+<div className="w-full h-fit bg-[#1e293b] py-12 px-6 text-white">
     {showEmbed && <EmbedLink id={id} setShowEmbedLink={setShowEmbed} />}
   <div className="max-w-6xl mx-auto flex justify-between items-center mb-10">
     <h1 className="text-3xl md:text-4xl font-bold text-blue-400 mb-6 md:mb-0 text-center md:text-left">
       Your Reviews
     </h1>
-
     <button
       onClick={() => setShowEmbed(true)}
       className="bg-fuchsia-600 hover:bg-fuchsia-700 transition-colors duration-300 px-6 py-2 text-white rounded-xl shadow-lg cursor-pointer"

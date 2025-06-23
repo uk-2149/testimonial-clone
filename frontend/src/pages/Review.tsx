@@ -51,6 +51,11 @@ function Review() {
     try {
       await axios.post(`http://localhost:5000/api/review/${shareId}`, review);
       alert("Review Submitted");
+      setReview({
+        name: "",
+        message: "",
+        rating: 0,
+      });
     } catch (err: any) {
       console.error(err.response?.data || err.message);
       alert(`error: ${err.message}`);
