@@ -73,7 +73,7 @@ const ReviewDashboard = () => {
     </button>
   </div>
 
-  {reviews.length === 0 && <p className='text-gray-300 text-center text-lg'>{loading ? "Loading reviews" : "No reviews yet"}</p>}
+  {reviews.length === 0 && <p className='text-gray-300 h-screen text-center text-lg'>{loading ? "Loading reviews..." : "No reviews yet"}</p>}
   <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto mt-10" >
     {reviews.map((rev) => (
       <div
