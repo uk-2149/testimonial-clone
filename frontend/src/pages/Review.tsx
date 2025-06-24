@@ -49,7 +49,7 @@ function Review() {
     e.preventDefault();
     console.log("Review submitted:", review);
     try {
-      await axios.post(`http://localhost:5000/api/review/${shareId}`, review);
+      await axios.post(`${backendUrl}/api/review/${shareId}`, review);
       alert("Review Submitted");
       setReview({
         name: "",
