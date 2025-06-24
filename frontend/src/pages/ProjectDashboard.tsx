@@ -57,7 +57,7 @@ const ProjectDashboard = () => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(
-      `http://localhost:5173/review/${project.shareId}`
+      `https://testimonial-uk-97.vercel.app/review/${project.shareId}`
     );
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -80,7 +80,7 @@ const ProjectDashboard = () => {
 
           <div className="bg-gray-100 p-4 rounded-md flex items-center justify-between">
             <span className="text-sm break-all text-gray-800">
-              http://localhost:5173/review/{project.shareId}
+            https://testimonial-uk-97.vercel.app/review/{project.shareId}
             </span>
             <button
               onClick={handleCopy}
